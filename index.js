@@ -64,7 +64,7 @@ app.post("/", async (req, res) => {
 function generatePrompt(topicName) {
   return `Rewrite this text using the principles found in How to Win Friends and Influence People.do not write less than 20 words.
   
-  ${animal}`;
+  ${topicName}`;
 }
 app.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
