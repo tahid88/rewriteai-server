@@ -62,7 +62,9 @@ app.post("/", async (req, res) => {
 });
 
 function generatePrompt(topicName) {
-  return `write an essay on ${topicName}. The essay should contain between 40 and 50 words. Please provide a complete essay within this word limit.`;
+  return `Rewrite this text using the principles found in How to Win Friends and Influence People.do not write less than 20 words.
+  
+  ${animal}`;
 }
 app.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
