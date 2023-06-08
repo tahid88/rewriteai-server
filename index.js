@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
