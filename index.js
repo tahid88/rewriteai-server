@@ -26,11 +26,11 @@ app.post("/", async (req, res) => {
     return;
   }
 
-  const animal = req.body.message || "cat";
-  if (animal.trim().length === 0) {
+  const text = req.body.message || "cat";
+  if (text.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter text",
       },
     });
     return;
@@ -39,7 +39,7 @@ app.post("/", async (req, res) => {
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePrompt(animal),
+      prompt: generatePrompt(text),
       temperature: 0.6,
       max_tokens: 50, //IMPORTANT: for bigger text
     });
@@ -61,10 +61,15 @@ app.post("/", async (req, res) => {
   }
 });
 
-function generatePrompt(topicName) {
-  return `Rewrite this text using the principles found in How to Win Friends and Influence People.do not write less than 20 words.
+// function generatePrompt(textData) {
+//   return `summarize this text.
+
+//   ${textData}`;
+// }
+function generatePrompt(textData) {
+  return `Rewrite this text using the principles found in How to Win Friends and Influence People. Here is the text -  
   
-  ${topicName}`;
+  ${textData}`;
 }
 app.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
