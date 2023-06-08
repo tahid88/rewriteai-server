@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
 const app = express();
 const port = 5000;
@@ -11,7 +12,10 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-app.get("/", async (req, res) => {
+app.post("/", async (req, res) => {
+  console.log(req.body);
+  // console.log(configuration.apiKey);
+  console.log(configuration.getApiKey);
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -22,7 +26,7 @@ app.get("/", async (req, res) => {
     return;
   }
 
-  const animal = req.body.animal || "rat";
+  const animal = req.body.message || "cat";
   if (animal.trim().length === 0) {
     res.status(400).json({
       error: {
