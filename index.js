@@ -70,7 +70,9 @@ app.post("/", async (req, res) => {
 //   ${textData}`;
 // }
 function generatePrompt(textData) {
-  return `Rewrite this text using the principles found in How to Win Friends and Influence People. Here is the text -  
+  return `Rewrite this text using the principles found in How to Win Friends and Influence People.
+  Please make sure the response is a complete and coherent paragraph that provides a thorough understanding of the topic.
+  Here is the text :
   
   ${textData}`;
 }
