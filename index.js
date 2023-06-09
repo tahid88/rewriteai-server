@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
+const { encode, decode } = require("gpt-3-encoder");
 const app = express();
 const port = 5000;
 app.use(cors());
@@ -13,9 +14,9 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 app.post("/", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   // console.log(configuration.apiKey);
-  console.log(configuration.getApiKey);
+  // console.log(configuration.getApiKey);
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -37,13 +38,15 @@ app.post("/", async (req, res) => {
   }
 
   try {
+    const encoded = encode(text.trim());
+    console.log(encoded.length);
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: generatePrompt(text),
       temperature: 0.6,
-      max_tokens: 50, //IMPORTANT: for bigger text
+      max_tokens: encoded?.length || text?.split(" ")?.length || 50, //IMPORTANT: for bigger text
     });
-    console.log(completion.data.choices[0].text);
+    // console.log(completion.data.choices[0].text);
     res.status(200).json({ result: completion.data.choices[0].text });
   } catch (error) {
     // Consider adjusting the error handling logic for your use case
@@ -71,6 +74,7 @@ function generatePrompt(textData) {
   
   ${textData}`;
 }
+
 app.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
 });
