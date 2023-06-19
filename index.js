@@ -44,7 +44,8 @@ app.post("/", async (req, res) => {
       model: "text-davinci-003",
       prompt: generatePrompt(text),
       temperature: 0.6,
-      max_tokens: encoded?.length || text?.split(" ")?.length || 50, //IMPORTANT: for bigger text
+      // max_tokens: encoded?.length || text?.split(" ")?.length || 50, //IMPORTANT: for bigger text
+      max_tokens: 300, //IMPORTANT: for bigger text
     });
     // console.log(completion.data.choices[0].text);
     res.status(200).json({ result: completion.data.choices[0].text });
